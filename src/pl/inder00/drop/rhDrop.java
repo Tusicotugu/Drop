@@ -14,6 +14,7 @@ import pl.inder00.drop.data.Config;
 import pl.inder00.drop.data.DataManager;
 import pl.inder00.drop.data.Message;
 import pl.inder00.drop.enums.TurbodropType;
+import pl.inder00.drop.listeners.AsyncPlayerChatListener;
 import pl.inder00.drop.listeners.BlockBreakListener;
 import pl.inder00.drop.listeners.InventoryClickListener;
 import pl.inder00.drop.listeners.PlayerJoinListener;
@@ -23,24 +24,21 @@ import pl.inder00.drop.utils.Util;
 
 public class rhDrop extends JavaPlugin {
 
-	private static rhDrop inst;
+	public static rhDrop inst;
 	public static PluginDescriptionFile desc;
 	
 	public static rhDrop getInst(){
-		if(inst == null) return new rhDrop();
 		return inst;
-	}
-	public rhDrop(){
-		inst = this;
 	}
 	public static void error(String s, boolean disable) {
 		Bukkit.getConsoleSender().sendMessage("§c["+desc.getName()+" v"+desc.getVersion()+"] "+s);
-		if(disable) Bukkit.getPluginManager().disablePlugin(new rhDrop());
+		if(disable) Bukkit.getPluginManager().disablePlugin(inst);
 	}
 	public static void success(String s) {
 		Bukkit.getConsoleSender().sendMessage("§a["+desc.getName()+" v"+desc.getVersion()+"] "+s);
 	}
 	public void onEnable() {
+		inst = this;
 		desc = this.getDescription();
 		DataManager.check();
 		Config.getInst().load();
@@ -51,6 +49,7 @@ public class rhDrop extends JavaPlugin {
 		Bukkit.getPluginManager().registerEvents(new BlockBreakListener(), this);
 		Bukkit.getPluginManager().registerEvents(new InventoryClickListener(), this);
 		Bukkit.getPluginManager().registerEvents(new PlayerJoinListener(), this);
+		Bukkit.getPluginManager().registerEvents(new AsyncPlayerChatListener(), this);
 		
 		new DropCommand(this);
 		new TurbodropCommand(this);

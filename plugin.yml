@@ -1,6 +1,6 @@
 name: rhDrop
 main: pl.inder00.drop.rhDrop
-version: 0.9.7
+version: 0.9.8
 author: Inder00
 commands:
   drop:
