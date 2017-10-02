@@ -22,8 +22,6 @@ import pl.inder00.drop.objects.Drop;
 
 public class Util {
 	
-	public static Random random = new Random();
-	
 	public static boolean equalsTool(Material tool, Drop drop) {
 		if(drop.getTools().size() == 0) return true;
 		for(String s : drop.getTools()) {
@@ -43,7 +41,8 @@ public class Util {
 		return false;
 	}
 	public static int randomInt(int min, int max){
-		return (int) (random.nextInt()*(max-min))+min;
+		Random rand = new Random();
+		return (int) (rand.nextInt(max)) +1;
 	}
 	public static int getLootBonus(ItemStack tool) {
 		Config cfg = Config.getInst();
@@ -62,7 +61,8 @@ public class Util {
 		
 	}
 	public static boolean chance(double chance){
-	    double random1 = random.nextDouble() * 100.0D;
+		Random rand = new Random();
+	    double random1 = rand.nextDouble() * 100.0D;
 	    if (random1 <= chance) {
 	    	return true;
 	    }

@@ -48,6 +48,7 @@ public class BlockBreakListener implements Listener {
 		}
 		
 		boolean existFromThisMaterial = false;
+		boolean checkRankUp = false;
 		for(Drop d : Drop.drops) {
 			if(d.getFrom().equals(b.getType())) {
 				existFromThisMaterial = true;
@@ -58,6 +59,7 @@ public class BlockBreakListener implements Listener {
 								int amount = (d.isFortuneEnabled()) ? Util.getLootBonus(tool) : 1;
 								int xp = d.getRewardXP()*amount;
 								u.setXp(u.getXp()+xp);
+								checkRankUp = true;
 								p.giveExp(d.getExp());
 								if(u.isEnabled(d)) {
 									
@@ -77,15 +79,21 @@ public class BlockBreakListener implements Listener {
 			}
 		}
 		if(existFromThisMaterial) {
-			if(u.isCobblestone()) rest.putAll(p.getInventory().addItem(b.getDrops().iterator().next()));
+			if(u.isCobblestone()) {
+				if(b.getDrops().iterator().next() != null) {
+					rest.putAll(p.getInventory().addItem(b.getDrops().iterator().next()));	
+				}
+			}
 			b.breakNaturally(new ItemStack(Material.AIR));
 			Util.recalculateDurability(p, tool);
 		}
 		Message msg = Message.getInst();
-		if(u.getXp() >= (u.getLevel()+1)*Config.getInst().xpToLevel) {
-			u.rankUp();
-			p.sendMessage(msg.getMessage("levelup").replace("{LEVEL}", (u.getLevel())+""));
-			Util.firework(b.getLocation());
+		if(checkRankUp) {
+			if(u.getXp() >= (u.getLevel()+1)*Config.getInst().xpToLevel) {
+				u.rankUp();
+				p.sendMessage(msg.getMessage("levelup").replace("{LEVEL}", (u.getLevel())+""));
+				Util.firework(b.getLocation());
+			}	
 		}
 		for (ItemStack l : rest.values())
 		{

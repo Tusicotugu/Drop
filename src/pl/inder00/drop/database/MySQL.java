@@ -80,5 +80,33 @@ public class MySQL {
 		rs.close();
 		closeConnection();
 	}
+	/*public static void save() throws SQLException {
+		openConnection();
+		init();
+		for(User u : User.players) {
+			PreparedStatement s = conn.prepareStatement("SELECT * FROM `players` WHERE `uuid` = '"+u.getUuid()+"';");
+			ResultSet rs = s.getResultSet();
+			if(rs.next()) {
+				conn.prepareStatement("UPDATE `players` SET `name` = '"+u.getName()+"', `uuid` = '"+u.getUuid()+"', `xp` = '"+u.getXp()+"', `level` = '"+u.getLevel()+"' WHERE `uuid` = '"+u.getUuid()+"';");
+			} else {
+				conn.prepareStatement("INSERT INTO `players` (`id`, `name`, `uuid`, `xp`, `level`) VALUES (NULL, '"+u.getName()+"', '"+u.getUuid()+"', '"+u.getXp()+"', '"+u.getLevel()+"');");
+			}
+			rs.close();
+		}
+		s.close();
+		closeConnection();
+	}
+	public static void load() throws SQLException {
+		openConnection();
+		init();
+		PreparedStatement  s = conn.prepareStatement("SELECT * FROM `players`");
+		ResultSet rs = s.executeQuery();
+		while(rs.next()) {
+			new User(rs.getString("name"), rs.getString("uuid"), rs.getInt("xp"), rs.getInt("level"));
+		}
+		s.close();
+		rs.close();
+		closeConnection();
+	}*/
 
 }

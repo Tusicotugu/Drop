@@ -19,6 +19,10 @@ public class TurbodropCommand implements CommandExecutor {
 	public TurbodropCommand(rhDrop api) {
 		api.getCommand("turbodrop").setExecutor(this);
 	}
+	/*
+	 * (non-Javadoc)
+	 * @see org.bukkit.command.CommandExecutor#onCommand(org.bukkit.command.CommandSender, org.bukkit.command.Command, java.lang.String, java.lang.String[])
+	 */
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String l, String[] args) {
